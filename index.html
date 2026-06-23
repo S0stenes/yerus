@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yerus Agency — Marketing que Transforma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    /* ─── CSS VARIABLES ─────────────────────────────────── */
+    :root {
+      --bg:          #373432;
+      --bg2:         #2c2a28;
+      --bg3:         #1e1c1a;
+      --text:        #F1EFEE;
+      --text-muted:  #b0aca8;
+      --gold-light:  #FFE999;
+      --gold-dark:   #573812;
+      --gold-mid:    #c9963a;
+      --gold-grad:   linear-gradient(135deg, #FFE999 0%, #c9963a 50%, #573812 100%);
+      --gold-grad2:  linear-gradient(90deg, #FFE999 0%, #573812 100%);
+      --card-bg:     rgba(255,255,255,0.04);
+      --card-border: rgba(255,233,153,0.12);
+      --overlay:     rgba(55,52,50,0.85);
+      --radius:      12px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+      --shadow:      0 8px 40px rgba(0,0,0,0.45);
+    }
+
+    /* ─── LIGHT MODE ──────────────────────────────────── */
+    [data-theme="light"] {
+      --bg:          #f5f3f0;
+      --bg2:         #ece9e4;
+      --bg3:         #dedad4;
+      --text:        #1a1816;
+      --text-muted:  #5c5652;
+      --card-bg:     rgba(0,0,0,0.04);
+      --card-border: rgba(87,56,18,0.18);
+      --overlay:     rgba(245,243,240,0.88);
+    }
+
+    /* ─── BODY ──────────────────────────────────────────── */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg3); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-mid); border-radius: 10px; }
+
+    /* ─── GOLD TEXT GRADIENT ────────────────────────────── */
+    .gold { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gold-line { width: 60px; height: 2px; background: var(--gold-grad2); border-radius: 2px; }
+
+    /* ─── HEADER ────────────────────────────────────────── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      height: 70px;
+      background: var(--overlay);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--card-border);
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none; flex-shrink: 0;
+    }
+
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted);
+      text-decoration: none; position: relative;
+      transition: color var(--transition);
+    }
+    nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--gold-grad2);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform var(--transition);
+    }
+    nav a:hover { color: var(--text); }
+    nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .header-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+    .btn-icon {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--text); border-radius: 8px;
+      padding: 0.45rem 0.75rem; font-size: 0.78rem;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      cursor: pointer; transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .btn-icon:hover { background: var(--gold-mid); color: #1a1816; border-color: var(--gold-mid); }
+
+    .lang-select {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--text); border-radius: 8px;
+      padding: 0.45rem 0.6rem; font-size: 0.78rem;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer; outline: none;
+      transition: all var(--transition);
+    }
+    .lang-select:hover { border-color: var(--gold-mid); }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile nav */
+    .mobile-nav {
+      display: none; position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--bg2); padding: 1.5rem 5vw;
+      flex-direction: column; gap: 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+      z-index: 998;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1rem;
+      font-weight: 500; color: var(--text-muted); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--text); }
+
+    /* ─── HERO ──────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 90px 5vw 60px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-video-wrap {
+      width: min(860px, 90vw); border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--card-border); box-shadow: var(--shadow);
+      margin-bottom: 3rem; position: relative;
+      background: var(--bg3);
+    }
+    .hero-video-wrap video { width: 100%; display: block; }
+    .video-play-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.38); cursor: pointer;
+      transition: background var(--transition);
+    }
+    .video-play-overlay:hover { background: rgba(0,0,0,0.18); }
+    .play-btn {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--gold-grad); display: flex; align-items: center; justify-content: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 0 30px rgba(255,233,153,0.3);
+    }
+    .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 50px rgba(255,233,153,0.5); }
+    .play-btn svg { width: 28px; height: 28px; fill: #1a1816; margin-left: 4px; }
+
+    .hero-eyebrow {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem;
+      font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 300;
+      line-height: 1.05; letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-title em { font-style: italic; }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-muted); max-width: 560px;
+      line-height: 1.7; margin: 0 auto 2.5rem;
+      opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .btn-gold {
+      padding: 0.85rem 2.2rem; border-radius: 50px;
+      background: var(--gold-grad); color: #1a1816;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem;
+      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(201,150,58,0.3);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,150,58,0.5); }
+
+    .btn-outline {
+      padding: 0.85rem 2.2rem; border-radius: 50px;
+      background: transparent; color: var(--text);
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      border: 1px solid var(--card-border); cursor: pointer; text-decoration: none;
+      transition: all var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--gold-mid); color: var(--gold-light); }
+
+    /* scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeIn 1s 1.4s forwards;
+    }
+    .scroll-indicator span { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+    .scroll-mouse {
+      width: 24px; height: 38px; border: 1.5px solid var(--text-muted);
+      border-radius: 12px; display: flex; justify-content: center; padding-top: 6px;
+    }
+    .scroll-wheel { width: 3px; height: 7px; background: var(--gold-mid); border-radius: 2px; animation: scrollWheel 1.8s infinite; }
+
+    /* bg orbs */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none; z-index: 0;
+    }
+    .orb1 { width: 450px; height: 450px; background: rgba(201,150,58,0.07); top: -100px; right: -120px; }
+    .orb2 { width: 350px; height: 350px; background: rgba(87,56,18,0.12); bottom: -80px; left: -80px; }
+
+    /* ─── SECTIONS SHARED ────────────────────────────────── */
+    section { position: relative; padding: 100px 5vw; }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold-mid); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 300;
+      line-height: 1.1; margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; }
+    .section-desc { color: var(--text-muted); line-height: 1.75; max-width: 600px; font-size: 1.02rem; }
+
+    /* ─── ABOUT ─────────────────────────────────────────── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center; max-width: 1200px; margin: 0 auto;
+    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+    .stat { padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.8rem;
+      font-weight: 700; background: var(--gold-grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem; letter-spacing: 0.05em; }
+    .about-visual {
+      position: relative; border-radius: 18px; overflow: hidden;
+      aspect-ratio: 4/5; background: var(--bg3);
+      border: 1px solid var(--card-border);
+    }
+    .about-visual-inner {
+      inset: 0; position: absolute;
+      background: linear-gradient(135deg, rgba(255,233,153,0.05) 0%, rgba(87,56,18,0.15) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-monogram {
+      font-family: 'Cormorant Garamond', serif; font-size: 12rem;
+      font-weight: 700; font-style: italic; line-height: 1;
+      background: var(--gold-grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      opacity: 0.18; user-select: none;
+    }
+    .about-badge {
+      position: absolute; bottom: 2rem; right: 2rem;
+      background: var(--gold-grad); color: #1a1816;
+      padding: 0.8rem 1.3rem; border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── SERVICES ──────────────────────────────────────── */
+    #services { background: var(--bg); }
+    .services-header { max-width: 1200px; margin: 0 auto 4rem; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 2.5rem 2rem;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold-grad2); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    .service-card:hover { transform: translateY(-6px); border-color: var(--gold-mid); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 54px; height: 54px; background: var(--gold-grad);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: #1a1816; fill: none; stroke-width: 1.8; }
+    .service-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+    .service-list { list-style: none; margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .service-list li { font-size: 0.82rem; color: var(--text-muted); padding-left: 1rem; position: relative; }
+    .service-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold-mid); font-size: 0.75rem; }
+
+    /* ─── PROCESS ───────────────────────────────────────── */
+    #process { background: var(--bg2); }
+    .process-header { max-width: 1200px; margin: 0 auto 5rem; }
+    .process-steps {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute; left: 29px; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-mid), transparent);
+    }
+    .process-step {
+      display: flex; gap: 2rem; padding: 2rem 0;
+      transition: transform var(--transition);
+    }
+    .process-step:hover { transform: translateX(8px); }
+    .step-num {
+      width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
+      border: 1px solid var(--card-border); background: var(--bg2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700;
+      background: var(--gold-grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      position: relative; z-index: 1;
+      box-shadow: 0 0 0 1px var(--card-border), 0 0 20px rgba(201,150,58,0.15);
+    }
+    .step-content { padding-top: 0.75rem; }
+    .step-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; max-width: 550px; }
+
+    /* ─── PORTFOLIO ─────────────────────────────────────── */
+    #portfolio { background: var(--bg); }
+    .portfolio-header { max-width: 1200px; margin: 0 auto 3.5rem; }
+    .portfolio-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+    }
+    .portfolio-item {
+      border-radius: 16px; overflow: hidden; position: relative;
+      background: var(--bg3); border: 1px solid var(--card-border);
+      aspect-ratio: 4/3; cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .portfolio-item:nth-child(1) { grid-column: span 2; }
+    .portfolio-item:hover { transform: scale(1.015); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .portfolio-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .portfolio-icon { font-size: 3rem; opacity: 0.15; }
+    .portfolio-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.5rem; opacity: 0; transition: opacity var(--transition);
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-tag {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 0.4rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .portfolio-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; }
+
+    /* ─── CONTACT ───────────────────────────────────────── */
+    #contact { background: var(--bg2); }
+    .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; }
+    .form-group input, .form-group textarea, .form-group select {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--text); border-radius: 10px;
+      padding: 0.85rem 1.1rem; font-size: 0.95rem;
+      font-family: 'Inter', sans-serif; outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--gold-mid);
+      box-shadow: 0 0 0 3px rgba(201,150,58,0.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--bg); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px; background: var(--card-bg);
+      border: 1px solid var(--card-border); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: var(--gold-mid); fill: none; stroke-width: 1.8; }
+    .contact-item-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.25rem; letter-spacing: 0.06em; }
+    .contact-item-val { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--bg3); border-top: 1px solid var(--card-border);
+      padding: 4rem 5vw 2rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem; max-width: 1200px; margin: 0 auto 3rem;
+    }
+    .footer-brand .logo { font-size: 1.6rem; display: inline-block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; max-width: 260px; }
+    .footer-col-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-size: 0.87rem; color: var(--text-muted); text-decoration: none; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--text); }
+    .social-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    .social-btn {
+      width: 40px; height: 40px; background: var(--card-bg);
+      border: 1px solid var(--card-border); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition); text-decoration: none;
+    }
+    .social-btn:hover { background: var(--gold-mid); border-color: var(--gold-mid); }
+    .social-btn svg { width: 17px; height: 17px; stroke: var(--text); fill: none; stroke-width: 1.8; }
+    .social-btn:hover svg { stroke: #1a1816; }
+    .footer-bottom { border-top: 1px solid var(--card-border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+    .footer-bottom p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ─── SCROLL ANIMATIONS ──────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ─── KEYFRAMES ─────────────────────────────────────── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scrollWheel { 0%,100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(10px); opacity: 0; } }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,150,58,0.3); } 50% { box-shadow: 0 0 0 12px rgba(201,150,58,0); } }
+
+    /* ─── CURSOR GLOW ────────────────────────────────────── */
+    .cursor-glow {
+      position: fixed; pointer-events: none; z-index: 9999;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,150,58,0.06) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: left 0.12s, top 0.12s;
+    }
+
+    /* ─── TOAST ──────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--gold-grad); color: #1a1816;
+      padding: 0.9rem 2rem; border-radius: 50px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 600;
+      z-index: 9998; transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0; white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ─── PARALLAX HERO LINE ──────────────────────────────── */
+    .parallax-line {
+      position: absolute; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,233,153,0.08), transparent);
+    }
+    .parallax-line:nth-child(1) { left: 20%; }
+    .parallax-line:nth-child(2) { left: 40%; }
+    .parallax-line:nth-child(3) { left: 60%; }
+    .parallax-line:nth-child(4) { left: 80%; }
+
+    /* ─── PROGRESS BAR ───────────────────────────────────── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--gold-grad2); z-index: 1000; width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-item:nth-child(1) { grid-column: span 2; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 70px 5vw; }
+      nav { display: none; }
+      .hamburger { display: flex; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-item:nth-child(1) { grid-column: span 1; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      .header-actions .lang-select, .header-actions .btn-icon { font-size: 0.72rem; padding: 0.4rem 0.55rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.4rem; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+
+    /* ─── LIGHT MODE ADJUSTMENTS ──────────────────────────── */
+    [data-theme="light"] .parallax-line { background: linear-gradient(to bottom, transparent, rgba(87,56,18,0.08), transparent); }
+    [data-theme="light"] .orb1 { background: rgba(201,150,58,0.08); }
+    [data-theme="light"] .orb2 { background: rgba(87,56,18,0.06); }
+    [data-theme="light"] .cursor-glow { background: radial-gradient(circle, rgba(201,150,58,0.04) 0%, transparent 70%); }
+  </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Toast -->
+<div id="toast" data-i18n="toast_sent">Mensagem enviada com sucesso! ✦</div>
+
+<!-- ═══════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════ -->
+<header>
+  <a href="#hero" class="logo">Yerus</a>
+
+  <nav>
+    <a href="#about" data-i18n="nav_about">Sobre</a>
+    <a href="#services" data-i18n="nav_services">Serviços</a>
+    <a href="#process" data-i18n="nav_process">Processo</a>
+    <a href="#portfolio" data-i18n="nav_portfolio">Portfólio</a>
+    <a href="#contact" data-i18n="nav_contact">Contato</a>
+  </nav>
+
+  <div class="header-actions">
+    <select class="lang-select" id="langSelect" title="Idioma" aria-label="Select language">
+      <option value="pt">🇧🇷 PT</option>
+      <option value="en">🇺🇸 EN</option>
+      <option value="fr">🇫🇷 FR</option>
+    </select>
+    <button class="btn-icon" id="themeToggle" title="Alternar tema" aria-label="Toggle theme">☀️</button>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" data-i18n="nav_about">Sobre</a>
+  <a href="#services" data-i18n="nav_services">Serviços</a>
+  <a href="#process" data-i18n="nav_process">Processo</a>
+  <a href="#portfolio" data-i18n="nav_portfolio">Portfólio</a>
+  <a href="#contact" data-i18n="nav_contact">Contato</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="parallax-line"></div>
+  <div class="parallax-line"></div>
+  <div class="parallax-line"></div>
+  <div class="parallax-line"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <!-- Presentation Video -->
+  <div class="hero-video-wrap" style="position:relative;z-index:1;">
+    <video id="heroVideo" poster="" preload="metadata" playsinline muted loop
+      style="max-height:460px;object-fit:cover;">
+      <!-- Replace src below with your actual video file -->
+      <source src="" type="video/mp4" />
+    </video>
+    <!-- Placeholder when no video is loaded -->
+    <div id="videoPlaceholder" style="width:100%;padding:80px 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;min-height:340px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:300;line-height:1.2;">
+        <span class="gold" data-i18n="video_title">Vídeo de Apresentação</span>
+      </div>
+      <p style="color:var(--text-muted);font-size:0.9rem;max-width:400px;" data-i18n="video_sub">Adicione seu vídeo de apresentação aqui para um impacto imediato com seus visitantes.</p>
+      <div style="width:70px;height:70px;background:var(--gold-grad);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(255,233,153,0.2);animation:pulse 2s infinite;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#1a1816"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+    <div class="video-play-overlay" id="videoPlayOverlay" style="display:none;">
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero-eyebrow" data-i18n="hero_eyebrow">Agência de Marketing Digital ✦ Resultados Reais</p>
+  <h1 class="hero-title">
+    <span data-i18n="hero_title1">Transformamos marcas em</span><br>
+    <em class="gold" data-i18n="hero_title2">experiências memoráveis</em>
+  </h1>
+  <p class="hero-sub" data-i18n="hero_sub">Estratégia, criatividade e tecnologia unidos para levar sua marca ao próximo nível. Social media, vídeos, tráfego pago e sites de alta conversão.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-gold" data-i18n="hero_cta1">Iniciar Projeto</a>
+    <a href="#services" class="btn-outline" data-i18n="hero_cta2">Ver Serviços</a>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span data-i18n="scroll_text">scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-label reveal" data-i18n="about_label">Sobre a Yerus</p>
+      <div class="gold-line reveal delay-1"></div>
+      <h2 class="section-title reveal delay-2">
+        <span data-i18n="about_title1">Criamos estratégias que</span><br>
+        <em data-i18n="about_title2">geram crescimento real</em>
+      </h2>
+      <p class="section-desc reveal delay-3" data-i18n="about_desc">
+        A Yerus nasceu da paixão por transformar negócios através do marketing digital. Unimos criatividade e dados para construir marcas que vendem, encantam e crescem de forma sustentável.
+      </p>
+      <div class="about-stats">
+        <div class="stat reveal delay-1"><div class="stat-num">+200</div><div class="stat-label" data-i18n="stat1">Clientes Atendidos</div></div>
+        <div class="stat reveal delay-2"><div class="stat-num">95%</div><div class="stat-label" data-i18n="stat2">Taxa de Satisfação</div></div>
+        <div class="stat reveal delay-3"><div class="stat-num">+5M</div><div class="stat-label" data-i18n="stat3">Alcance Orgânico</div></div>
+        <div class="stat reveal delay-4"><div class="stat-num">8x</div><div class="stat-label" data-i18n="stat4">ROI Médio em Tráfego</div></div>
+      </div>
+    </div>
+    <div class="about-visual reveal-right">
+      <div class="about-visual-inner">
+        <div class="about-monogram">Y</div>
+      </div>
+      <div class="about-badge" data-i18n="badge">Desde 2018 ✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════════════ -->
+<section id="services">
+  <div class="services-header">
+    <p class="section-label reveal" data-i18n="services_label">O que oferecemos</p>
+    <div class="gold-line reveal delay-1"></div>
+    <h2 class="section-title reveal delay-2">
+      <span data-i18n="services_title1">Soluções completas para</span><br>
+      <em data-i18n="services_title2">sua presença digital</em>
+    </h2>
+  </div>
+  <div class="services-grid">
+
+    <!-- Social Media -->
+    <div class="service-card reveal delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s1_title">Social Media</div>
+      <div class="service-desc" data-i18n="s1_desc">Gestão estratégica das suas redes sociais com conteúdo que engaja, converte e fortalece sua marca.</div>
+      <ul class="service-list">
+        <li data-i18n="s1_l1">Planejamento editorial mensal</li>
+        <li data-i18n="s1_l2">Criação de conteúdo visual</li>
+        <li data-i18n="s1_l3">Copywriting persuasivo</li>
+        <li data-i18n="s1_l4">Análise e relatórios</li>
+      </ul>
+    </div>
+
+    <!-- Video -->
+    <div class="service-card reveal delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s2_title">Gravação de Vídeos</div>
+      <div class="service-desc" data-i18n="s2_desc">Produção audiovisual completa: do roteiro à edição final. Vídeos que contam histórias e convertem.</div>
+      <ul class="service-list">
+        <li data-i18n="s2_l1">Reels e vídeos curtos</li>
+        <li data-i18n="s2_l2">Vídeos institucionais</li>
+        <li data-i18n="s2_l3">Motion graphics</li>
+        <li data-i18n="s2_l4">Edição profissional</li>
+      </ul>
+    </div>
+
+    <!-- Tráfego Pago -->
+    <div class="service-card reveal delay-3">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s3_title">Tráfego Pago</div>
+      <div class="service-desc" data-i18n="s3_desc">Campanhas de alta performance no Google, Meta e mais. Cada real investido com máxima eficiência.</div>
+      <ul class="service-list">
+        <li data-i18n="s3_l1">Google Ads & Search</li>
+        <li data-i18n="s3_l2">Meta Ads (Facebook/Instagram)</li>
+        <li data-i18n="s3_l3">Remarketing avançado</li>
+        <li data-i18n="s3_l4">Otimização contínua</li>
+      </ul>
+    </div>
+
+    <!-- Landing Page -->
+    <div class="service-card reveal delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s4_title">Landing Pages</div>
+      <div class="service-desc" data-i18n="s4_desc">Páginas de alta conversão, rápidas e otimizadas. Design que vende e UX que guia o cliente até a ação.</div>
+      <ul class="service-list">
+        <li data-i18n="s4_l1">Design personalizado</li>
+        <li data-i18n="s4_l2">Otimização para conversão</li>
+        <li data-i18n="s4_l3">Integração com CRM/Email</li>
+        <li data-i18n="s4_l4">Testes A/B</li>
+      </ul>
+    </div>
+
+    <!-- One Page -->
+    <div class="service-card reveal delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s5_title">Sites One Page</div>
+      <div class="service-desc" data-i18n="s5_desc">Sites completos e elegantes em uma única página. Rápidos, responsivos e impactantes para o seu negócio.</div>
+      <ul class="service-list">
+        <li data-i18n="s5_l1">Design responsivo mobile</li>
+        <li data-i18n="s5_l2">Animações e parallax</li>
+        <li data-i18n="s5_l3">SEO otimizado</li>
+        <li data-i18n="s5_l4">Entrega em 10 dias</li>
+      </ul>
+    </div>
+
+    <!-- E-commerce -->
+    <div class="service-card reveal delay-3">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <div class="service-title" data-i18n="s6_title">E-commerce</div>
+      <div class="service-desc" data-i18n="s6_desc">Lojas virtuais completas com experiência de compra impecável. Do design ao checkout, tudo otimizado para vender.</div>
+      <ul class="service-list">
+        <li data-i18n="s6_l1">Plataformas Shopify / WooCommerce</li>
+        <li data-i18n="s6_l2">Integração de pagamentos</li>
+        <li data-i18n="s6_l3">Gestão de produtos</li>
+        <li data-i18n="s6_l4">UX para conversão</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROCESS
+════════════════════════════════════════════════ -->
+<section id="process">
+  <div class="process-header">
+    <p class="section-label reveal" data-i18n="process_label">Como trabalhamos</p>
+    <div class="gold-line reveal delay-1"></div>
+    <h2 class="section-title reveal delay-2">
+      <span data-i18n="process_title1">Um processo</span> <em data-i18n="process_title2">pensado para resultados</em>
+    </h2>
+    <p class="section-desc reveal delay-3" data-i18n="process_desc">Da descoberta ao lançamento, cada etapa é executada com rigor e criatividade.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="step1_title">Descoberta & Imersão</div>
+        <div class="step-desc" data-i18n="step1_desc">Entendemos profundamente o seu negócio, público-alvo, concorrentes e objetivos. Essa etapa define toda a estratégia.</div>
+      </div>
+    </div>
+    <div class="process-step reveal delay-1">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="step2_title">Estratégia & Planejamento</div>
+        <div class="step-desc" data-i18n="step2_desc">Criamos um plano de ação detalhado com metas, prazos, canais e KPIs definidos para o sucesso do projeto.</div>
+      </div>
+    </div>
+    <div class="process-step reveal delay-2">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="step3_title">Criação & Produção</div>
+        <div class="step-desc" data-i18n="step3_desc">Nossa equipe criativa entra em ação: designs, vídeos, copies e campanhas produzidas com excelência e atenção aos detalhes.</div>
+      </div>
+    </div>
+    <div class="process-step reveal delay-3">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="step4_title">Lançamento & Otimização</div>
+        <div class="step-desc" data-i18n="step4_desc">Lançamos, monitoramos e otimizamos continuamente. Analisamos dados em tempo real para maximizar os resultados.</div>
+      </div>
+    </div>
+    <div class="process-step reveal delay-4">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="step5_title">Relatório & Crescimento</div>
+        <div class="step-desc" data-i18n="step5_desc">Relatórios transparentes e reuniões periódicas para alinhar objetivos, celebrar conquistas e planejar o próximo passo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PORTFOLIO
+════════════════════════════════════════════════ -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <p class="section-label reveal" data-i18n="portfolio_label">Nossos trabalhos</p>
+    <div class="gold-line reveal delay-1"></div>
+    <h2 class="section-title reveal delay-2">
+      <em data-i18n="portfolio_title1">Resultados</em> <span data-i18n="portfolio_title2">que falam por si</span>
+    </h2>
+    <p class="section-desc reveal delay-3" data-i18n="portfolio_desc">Uma seleção dos projetos que transformaram marcas e geraram crescimento real para nossos clientes.</p>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item reveal-scale">
+      <div class="portfolio-bg"><div class="portfolio-icon">✦</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p1_tag">E-commerce</div><div class="portfolio-name" data-i18n="p1_name">Boutique Áurea — Loja Virtual</div></div>
+    </div>
+    <div class="portfolio-item reveal-scale delay-1">
+      <div class="portfolio-bg"><div class="portfolio-icon">◈</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p2_tag">Social Media</div><div class="portfolio-name" data-i18n="p2_name">Studio X — Gestão de Redes</div></div>
+    </div>
+    <div class="portfolio-item reveal-scale delay-1">
+      <div class="portfolio-bg"><div class="portfolio-icon">⬡</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p3_tag">Tráfego Pago</div><div class="portfolio-name" data-i18n="p3_name">Clínica Vital — Google Ads</div></div>
+    </div>
+    <div class="portfolio-item reveal-scale delay-2">
+      <div class="portfolio-bg"><div class="portfolio-icon">◇</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p4_tag">Vídeo</div><div class="portfolio-name" data-i18n="p4_name">Imobiliária Sol — Vídeos Institucionais</div></div>
+    </div>
+    <div class="portfolio-item reveal-scale delay-2">
+      <div class="portfolio-bg"><div class="portfolio-icon">○</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p5_tag">Landing Page</div><div class="portfolio-name" data-i18n="p5_name">TechStart — Lançamento de Produto</div></div>
+    </div>
+    <div class="portfolio-item reveal-scale delay-3">
+      <div class="portfolio-bg"><div class="portfolio-icon">△</div></div>
+      <div class="portfolio-overlay"><div class="portfolio-tag" data-i18n="p6_tag">One Page</div><div class="portfolio-name" data-i18n="p6_name">Chef Lucas — Site Institucional</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <p class="section-label reveal" data-i18n="contact_label">Fale conosco</p>
+      <div class="gold-line reveal delay-1"></div>
+      <h2 class="section-title reveal delay-2">
+        <span data-i18n="contact_title1">Vamos construir algo</span><br>
+        <em data-i18n="contact_title2">extraordinário juntos</em>
+      </h2>
+      <p class="section-desc reveal delay-3" style="margin-bottom:2.5rem;" data-i18n="contact_desc">Conte-nos sobre o seu projeto. Nossa equipe entrará em contato em até 24 horas.</p>
+      <div class="contact-info">
+        <div class="contact-item reveal delay-1">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="contact-item-title" data-i18n="contact_email_label">E-mail</div><div class="contact-item-val">contato@yerus.com.br</div></div>
+        </div>
+        <div class="contact-item reveal delay-2">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.09 6.09l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><div class="contact-item-title" data-i18n="contact_phone_label">WhatsApp</div><div class="contact-item-val">+55 (27) 9 9999-9999</div></div>
+        </div>
+        <div class="contact-item reveal delay-3">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="contact-item-title" data-i18n="contact_loc_label">Localização</div><div class="contact-item-val">Espírito Santo, Brasil</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal-right">
+      <div class="form-row">
+        <div class="form-group"><label data-i18n="form_name">Nome</label><input type="text" id="fname" placeholder="Seu nome" data-placeholder-pt="Seu nome" data-placeholder-en="Your name" data-placeholder-fr="Votre nom" /></div>
+        <div class="form-group"><label data-i18n="form_email">E-mail</label><input type="email" id="femail" placeholder="seu@email.com" /></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_service">Serviço de Interesse</label>
+        <select id="fservice">
+          <option value="" data-i18n="form_select">Selecione um serviço</option>
+          <option value="social" data-i18n="s1_title">Social Media</option>
+          <option value="video" data-i18n="s2_title">Gravação de Vídeos</option>
+          <option value="traffic" data-i18n="s3_title">Tráfego Pago</option>
+          <option value="landing" data-i18n="s4_title">Landing Pages</option>
+          <option value="onepage" data-i18n="s5_title">Sites One Page</option>
+          <option value="ecommerce" data-i18n="s6_title">E-commerce</option>
+        </select>
+      </div>
+      <div class="form-group"><label data-i18n="form_msg">Mensagem</label><textarea id="fmessage" placeholder="Conte sobre o seu projeto..." data-placeholder-pt="Conte sobre o seu projeto..." data-placeholder-en="Tell us about your project..." data-placeholder-fr="Parlez-nous de votre projet..."></textarea></div>
+      <button class="btn-gold" id="submitBtn" style="width:100%;justify-content:center;" data-i18n="form_btn">Enviar Mensagem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="logo">Yerus</a>
+      <p data-i18n="footer_desc">Marketing digital que transforma negócios. Criatividade, estratégia e resultados que você pode medir.</p>
+      <div class="social-links">
+        <!-- Instagram -->
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="#" class="social-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="#" class="social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98"/></svg>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/5527999999999" class="social-btn" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title" data-i18n="footer_services">Serviços</div>
+      <ul class="footer-links">
+        <li><a href="#services" data-i18n="s1_title">Social Media</a></li>
+        <li><a href="#services" data-i18n="s2_title">Gravação de Vídeos</a></li>
+        <li><a href="#services" data-i18n="s3_title">Tráfego Pago</a></li>
+        <li><a href="#services" data-i18n="s4_title">Landing Pages</a></li>
+        <li><a href="#services" data-i18n="s5_title">Sites One Page</a></li>
+        <li><a href="#services" data-i18n="s6_title">E-commerce</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title" data-i18n="footer_company">Empresa</div>
+      <ul class="footer-links">
+        <li><a href="#about" data-i18n="nav_about">Sobre</a></li>
+        <li><a href="#process" data-i18n="nav_process">Processo</a></li>
+        <li><a href="#portfolio" data-i18n="nav_portfolio">Portfólio</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title" data-i18n="footer_contact">Contato</div>
+      <ul class="footer-links">
+        <li><a href="mailto:contato@yerus.com.br">contato@yerus.com.br</a></li>
+        <li><a href="https://wa.me/5527999999999">+55 (27) 9 9999-9999</a></li>
+        <li><a href="#contact" data-i18n="footer_form">Formulário</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom" style="max-width:1200px;margin:0 auto;">
+    <p data-i18n="footer_copy">© 2025 Yerus Agency. Todos os direitos reservados.</p>
+    <p data-i18n="footer_made">Feito com ✦ no Brasil</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════ -->
+<script>
+// ─── TRANSLATIONS ──────────────────────────────
+const translations = {
+  pt: {
+    nav_about: "Sobre", nav_services: "Serviços", nav_process: "Processo",
+    nav_portfolio: "Portfólio", nav_contact: "Contato",
+    hero_eyebrow: "Agência de Marketing Digital ✦ Resultados Reais",
+    hero_title1: "Transformamos marcas em", hero_title2: "experiências memoráveis",
+    hero_sub: "Estratégia, criatividade e tecnologia unidos para levar sua marca ao próximo nível. Social media, vídeos, tráfego pago e sites de alta conversão.",
+    hero_cta1: "Iniciar Projeto", hero_cta2: "Ver Serviços",
+    scroll_text: "scroll",
+    video_title: "Vídeo de Apresentação", video_sub: "Adicione seu vídeo de apresentação aqui para um impacto imediato com seus visitantes.",
+    about_label: "Sobre a Yerus", about_title1: "Criamos estratégias que", about_title2: "geram crescimento real",
+    about_desc: "A Yerus nasceu da paixão por transformar negócios através do marketing digital. Unimos criatividade e dados para construir marcas que vendem, encantam e crescem de forma sustentável.",
+    stat1: "Clientes Atendidos", stat2: "Taxa de Satisfação", stat3: "Alcance Orgânico", stat4: "ROI Médio em Tráfego",
+    badge: "Desde 2018 ✦",
+    services_label: "O que oferecemos", services_title1: "Soluções completas para", services_title2: "sua presença digital",
+    s1_title: "Social Media", s1_desc: "Gestão estratégica das suas redes sociais com conteúdo que engaja, converte e fortalece sua marca.",
+    s1_l1: "Planejamento editorial mensal", s1_l2: "Criação de conteúdo visual", s1_l3: "Copywriting persuasivo", s1_l4: "Análise e relatórios",
+    s2_title: "Gravação de Vídeos", s2_desc: "Produção audiovisual completa: do roteiro à edição final. Vídeos que contam histórias e convertem.",
+    s2_l1: "Reels e vídeos curtos", s2_l2: "Vídeos institucionais", s2_l3: "Motion graphics", s2_l4: "Edição profissional",
+    s3_title: "Tráfego Pago", s3_desc: "Campanhas de alta performance no Google, Meta e mais. Cada real investido com máxima eficiência.",
+    s3_l1: "Google Ads & Search", s3_l2: "Meta Ads (Facebook/Instagram)", s3_l3: "Remarketing avançado", s3_l4: "Otimização contínua",
+    s4_title: "Landing Pages", s4_desc: "Páginas de alta conversão, rápidas e otimizadas. Design que vende e UX que guia o cliente até a ação.",
+    s4_l1: "Design personalizado", s4_l2: "Otimização para conversão", s4_l3: "Integração com CRM/Email", s4_l4: "Testes A/B",
+    s5_title: "Sites One Page", s5_desc: "Sites completos e elegantes em uma única página. Rápidos, responsivos e impactantes para o seu negócio.",
+    s5_l1: "Design responsivo mobile", s5_l2: "Animações e parallax", s5_l3: "SEO otimizado", s5_l4: "Entrega em 10 dias",
+    s6_title: "E-commerce", s6_desc: "Lojas virtuais completas com experiência de compra impecável. Do design ao checkout, tudo otimizado para vender.",
+    s6_l1: "Plataformas Shopify / WooCommerce", s6_l2: "Integração de pagamentos", s6_l3: "Gestão de produtos", s6_l4: "UX para conversão",
+    process_label: "Como trabalhamos", process_title1: "Um processo", process_title2: "pensado para resultados",
+    process_desc: "Da descoberta ao lançamento, cada etapa é executada com rigor e criatividade.",
+    step1_title: "Descoberta & Imersão", step1_desc: "Entendemos profundamente o seu negócio, público-alvo, concorrentes e objetivos. Essa etapa define toda a estratégia.",
+    step2_title: "Estratégia & Planejamento", step2_desc: "Criamos um plano de ação detalhado com metas, prazos, canais e KPIs definidos para o sucesso do projeto.",
+    step3_title: "Criação & Produção", step3_desc: "Nossa equipe criativa entra em ação: designs, vídeos, copies e campanhas produzidas com excelência e atenção aos detalhes.",
+    step4_title: "Lançamento & Otimização", step4_desc: "Lançamos, monitoramos e otimizamos continuamente. Analisamos dados em tempo real para maximizar os resultados.",
+    step5_title: "Relatório & Crescimento", step5_desc: "Relatórios transparentes e reuniões periódicas para alinhar objetivos, celebrar conquistas e planejar o próximo passo.",
+    portfolio_label: "Nossos trabalhos", portfolio_title1: "Resultados", portfolio_title2: "que falam por si",
+    portfolio_desc: "Uma seleção dos projetos que transformaram marcas e geraram crescimento real para nossos clientes.",
+    p1_tag: "E-commerce", p1_name: "Boutique Áurea — Loja Virtual",
+    p2_tag: "Social Media", p2_name: "Studio X — Gestão de Redes",
+    p3_tag: "Tráfego Pago", p3_name: "Clínica Vital — Google Ads",
+    p4_tag: "Vídeo", p4_name: "Imobiliária Sol — Vídeos Institucionais",
+    p5_tag: "Landing Page", p5_name: "TechStart — Lançamento de Produto",
+    p6_tag: "One Page", p6_name: "Chef Lucas — Site Institucional",
+    contact_label: "Fale conosco", contact_title1: "Vamos construir algo", contact_title2: "extraordinário juntos",
+    contact_desc: "Conte-nos sobre o seu projeto. Nossa equipe entrará em contato em até 24 horas.",
+    contact_email_label: "E-mail", contact_phone_label: "WhatsApp", contact_loc_label: "Localização",
+    form_name: "Nome", form_email: "E-mail", form_service: "Serviço de Interesse",
+    form_select: "Selecione um serviço", form_msg: "Mensagem", form_btn: "Enviar Mensagem →",
+    toast_sent: "Mensagem enviada com sucesso! ✦",
+    footer_desc: "Marketing digital que transforma negócios. Criatividade, estratégia e resultados que você pode medir.",
+    footer_services: "Serviços", footer_company: "Empresa", footer_contact: "Contato", footer_form: "Formulário",
+    footer_copy: "© 2025 Yerus Agency. Todos os direitos reservados.", footer_made: "Feito com ✦ no Brasil"
+  },
+  en: {
+    nav_about: "About", nav_services: "Services", nav_process: "Process",
+    nav_portfolio: "Portfolio", nav_contact: "Contact",
+    hero_eyebrow: "Digital Marketing Agency ✦ Real Results",
+    hero_title1: "We transform brands into", hero_title2: "memorable experiences",
+    hero_sub: "Strategy, creativity and technology united to take your brand to the next level. Social media, videos, paid traffic and high-conversion websites.",
+    hero_cta1: "Start a Project", hero_cta2: "View Services",
+    scroll_text: "scroll",
+    video_title: "Presentation Video", video_sub: "Add your presentation video here for immediate impact with your visitors.",
+    about_label: "About Yerus", about_title1: "We create strategies that", about_title2: "generate real growth",
+    about_desc: "Yerus was born from a passion for transforming businesses through digital marketing. We combine creativity and data to build brands that sell, delight and grow sustainably.",
+    stat1: "Clients Served", stat2: "Satisfaction Rate", stat3: "Organic Reach", stat4: "Average Traffic ROI",
+    badge: "Since 2018 ✦",
+    services_label: "What we offer", services_title1: "Complete solutions for", services_title2: "your digital presence",
+    s1_title: "Social Media", s1_desc: "Strategic management of your social networks with content that engages, converts and strengthens your brand.",
+    s1_l1: "Monthly editorial planning", s1_l2: "Visual content creation", s1_l3: "Persuasive copywriting", s1_l4: "Analytics & reporting",
+    s2_title: "Video Production", s2_desc: "Complete audiovisual production: from script to final edit. Videos that tell stories and convert.",
+    s2_l1: "Reels and short videos", s2_l2: "Institutional videos", s2_l3: "Motion graphics", s2_l4: "Professional editing",
+    s3_title: "Paid Traffic", s3_desc: "High-performance campaigns on Google, Meta and more. Every dollar invested with maximum efficiency.",
+    s3_l1: "Google Ads & Search", s3_l2: "Meta Ads (Facebook/Instagram)", s3_l3: "Advanced remarketing", s3_l4: "Continuous optimization",
+    s4_title: "Landing Pages", s4_desc: "High-conversion, fast and optimized pages. Design that sells and UX that guides customers to action.",
+    s4_l1: "Custom design", s4_l2: "Conversion optimization", s4_l3: "CRM/Email integration", s4_l4: "A/B testing",
+    s5_title: "One Page Sites", s5_desc: "Complete and elegant websites on a single page. Fast, responsive and impactful for your business.",
+    s5_l1: "Mobile responsive design", s5_l2: "Animations & parallax", s5_l3: "SEO optimized", s5_l4: "10-day delivery",
+    s6_title: "E-commerce", s6_desc: "Complete online stores with flawless shopping experience. From design to checkout, everything optimized to sell.",
+    s6_l1: "Shopify / WooCommerce", s6_l2: "Payment integration", s6_l3: "Product management", s6_l4: "Conversion UX",
+    process_label: "How we work", process_title1: "A process", process_title2: "built for results",
+    process_desc: "From discovery to launch, every step is executed with rigor and creativity.",
+    step1_title: "Discovery & Immersion", step1_desc: "We deeply understand your business, target audience, competitors and goals. This stage defines the entire strategy.",
+    step2_title: "Strategy & Planning", step2_desc: "We create a detailed action plan with defined goals, timelines, channels and KPIs for the project's success.",
+    step3_title: "Creation & Production", step3_desc: "Our creative team gets to work: designs, videos, copy and campaigns produced with excellence and attention to detail.",
+    step4_title: "Launch & Optimization", step4_desc: "We launch, monitor and continuously optimize. We analyze real-time data to maximize results.",
+    step5_title: "Reporting & Growth", step5_desc: "Transparent reports and periodic meetings to align goals, celebrate achievements and plan the next step.",
+    portfolio_label: "Our work", portfolio_title1: "Results", portfolio_title2: "that speak for themselves",
+    portfolio_desc: "A selection of projects that transformed brands and generated real growth for our clients.",
+    p1_tag: "E-commerce", p1_name: "Áurea Boutique — Online Store",
+    p2_tag: "Social Media", p2_name: "Studio X — Social Management",
+    p3_tag: "Paid Traffic", p3_name: "Vital Clinic — Google Ads",
+    p4_tag: "Video", p4_name: "Sol Real Estate — Corporate Videos",
+    p5_tag: "Landing Page", p5_name: "TechStart — Product Launch",
+    p6_tag: "One Page", p6_name: "Chef Lucas — Institutional Site",
+    contact_label: "Get in touch", contact_title1: "Let's build something", contact_title2: "extraordinary together",
+    contact_desc: "Tell us about your project. Our team will get back to you within 24 hours.",
+    contact_email_label: "Email", contact_phone_label: "WhatsApp", contact_loc_label: "Location",
+    form_name: "Name", form_email: "Email", form_service: "Service of Interest",
+    form_select: "Select a service", form_msg: "Message", form_btn: "Send Message →",
+    toast_sent: "Message sent successfully! ✦",
+    footer_desc: "Digital marketing that transforms businesses. Creativity, strategy and measurable results.",
+    footer_services: "Services", footer_company: "Company", footer_contact: "Contact", footer_form: "Form",
+    footer_copy: "© 2025 Yerus Agency. All rights reserved.", footer_made: "Made with ✦ in Brazil"
+  },
+  fr: {
+    nav_about: "À propos", nav_services: "Services", nav_process: "Processus",
+    nav_portfolio: "Portfolio", nav_contact: "Contact",
+    hero_eyebrow: "Agence de Marketing Digital ✦ Résultats Réels",
+    hero_title1: "Nous transformons les marques en", hero_title2: "expériences mémorables",
+    hero_sub: "Stratégie, créativité et technologie réunies pour propulser votre marque. Social media, vidéos, trafic payant et sites haute conversion.",
+    hero_cta1: "Démarrer un Projet", hero_cta2: "Voir les Services",
+    scroll_text: "défiler",
+    video_title: "Vidéo de Présentation", video_sub: "Ajoutez votre vidéo de présentation ici pour un impact immédiat auprès de vos visiteurs.",
+    about_label: "À propos de Yerus", about_title1: "Nous créons des stratégies qui", about_title2: "génèrent une vraie croissance",
+    about_desc: "Yerus est né de la passion de transformer les entreprises par le marketing digital. Nous combinons créativité et données pour construire des marques qui vendent et croissent.",
+    stat1: "Clients Servis", stat2: "Taux de Satisfaction", stat3: "Portée Organique", stat4: "ROI Moyen en Trafic",
+    badge: "Depuis 2018 ✦",
+    services_label: "Ce que nous offrons", services_title1: "Solutions complètes pour", services_title2: "votre présence digitale",
+    s1_title: "Social Media", s1_desc: "Gestion stratégique de vos réseaux sociaux avec du contenu qui engage, convertit et renforce votre marque.",
+    s1_l1: "Planning éditorial mensuel", s1_l2: "Création de contenu visuel", s1_l3: "Copywriting persuasif", s1_l4: "Analyses et rapports",
+    s2_title: "Production Vidéo", s2_desc: "Production audiovisuelle complète : du script au montage final. Des vidéos qui racontent des histoires et convertissent.",
+    s2_l1: "Reels et vidéos courtes", s2_l2: "Vidéos institutionnelles", s2_l3: "Motion graphics", s2_l4: "Montage professionnel",
+    s3_title: "Trafic Payant", s3_desc: "Campagnes haute performance sur Google, Meta et plus. Chaque euro investi avec une efficacité maximale.",
+    s3_l1: "Google Ads & Search", s3_l2: "Meta Ads (Facebook/Instagram)", s3_l3: "Remarketing avancé", s3_l4: "Optimisation continue",
+    s4_title: "Landing Pages", s4_desc: "Pages haute conversion, rapides et optimisées. Design qui vend et UX qui guide le client vers l'action.",
+    s4_l1: "Design personnalisé", s4_l2: "Optimisation de conversion", s4_l3: "Intégration CRM/Email", s4_l4: "Tests A/B",
+    s5_title: "Sites One Page", s5_desc: "Sites complets et élégants en une seule page. Rapides, responsifs et percutants pour votre activité.",
+    s5_l1: "Design mobile responsive", s5_l2: "Animations et parallax", s5_l3: "SEO optimisé", s5_l4: "Livraison en 10 jours",
+    s6_title: "E-commerce", s6_desc: "Boutiques en ligne complètes avec une expérience d'achat irréprochable. Du design au paiement, tout est optimisé.",
+    s6_l1: "Plateformes Shopify / WooCommerce", s6_l2: "Intégration paiements", s6_l3: "Gestion des produits", s6_l4: "UX conversion",
+    process_label: "Notre méthode", process_title1: "Un processus", process_title2: "pensé pour les résultats",
+    process_desc: "De la découverte au lancement, chaque étape est exécutée avec rigueur et créativité.",
+    step1_title: "Découverte & Immersion", step1_desc: "Nous comprenons profondément votre entreprise, votre cible, vos concurrents et vos objectifs. Cette étape définit toute la stratégie.",
+    step2_title: "Stratégie & Planification", step2_desc: "Nous créons un plan d'action détaillé avec des objectifs, délais, canaux et KPIs définis pour la réussite du projet.",
+    step3_title: "Création & Production", step3_desc: "Notre équipe créative entre en action : designs, vidéos, copies et campagnes produites avec excellence.",
+    step4_title: "Lancement & Optimisation", step4_desc: "Nous lançons, surveillons et optimisons en continu. Nous analysons les données en temps réel pour maximiser les résultats.",
+    step5_title: "Rapport & Croissance", step5_desc: "Rapports transparents et réunions périodiques pour aligner les objectifs, célébrer les succès et planifier la suite.",
+    portfolio_label: "Nos réalisations", portfolio_title1: "Des résultats", portfolio_title2: "qui parlent d'eux-mêmes",
+    portfolio_desc: "Une sélection de projets qui ont transformé des marques et généré une vraie croissance pour nos clients.",
+    p1_tag: "E-commerce", p1_name: "Boutique Áurea — Boutique en ligne",
+    p2_tag: "Social Media", p2_name: "Studio X — Gestion Réseaux",
+    p3_tag: "Trafic Payant", p3_name: "Clinique Vital — Google Ads",
+    p4_tag: "Vidéo", p4_name: "Immobilier Sol — Vidéos Institutionnelles",
+    p5_tag: "Landing Page", p5_name: "TechStart — Lancement Produit",
+    p6_tag: "One Page", p6_name: "Chef Lucas — Site Institutionnel",
+    contact_label: "Contactez-nous", contact_title1: "Construisons quelque chose", contact_title2: "d'extraordinaire ensemble",
+    contact_desc: "Parlez-nous de votre projet. Notre équipe vous répondra dans les 24 heures.",
+    contact_email_label: "E-mail", contact_phone_label: "WhatsApp", contact_loc_label: "Localisation",
+    form_name: "Nom", form_email: "E-mail", form_service: "Service souhaité",
+    form_select: "Choisissez un service", form_msg: "Message", form_btn: "Envoyer le Message →",
+    toast_sent: "Message envoyé avec succès ! ✦",
+    footer_desc: "Marketing digital qui transforme les entreprises. Créativité, stratégie et résultats mesurables.",
+    footer_services: "Services", footer_company: "Entreprise", footer_contact: "Contact", footer_form: "Formulaire",
+    footer_copy: "© 2025 Yerus Agency. Tous droits réservés.", footer_made: "Fait avec ✦ au Brésil"
+  }
+};
+
+let currentLang = 'pt';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  // Placeholders
+  document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(el => {
+    el.placeholder = el.getAttribute('data-placeholder-' + lang);
+  });
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+}
+
+document.getElementById('langSelect').addEventListener('change', function() {
+  applyLang(this.value);
+});
+
+// ─── THEME TOGGLE ──────────────────────────────
+const themeToggle = document.getElementById('themeToggle');
+let isDark = true;
+themeToggle.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeToggle.textContent = isDark ? '☀️' : '🌙';
+});
+
+// ─── HAMBURGER ─────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+hamburger.addEventListener('keydown', e => { if (e.key === 'Enter') hamburger.click(); });
+
+// ─── SCROLL REVEAL ─────────────────────────────
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// ─── PROGRESS BAR ──────────────────────────────
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
+
+// ─── CURSOR GLOW ───────────────────────────────
+const cursorGlow = document.getElementById('cursorGlow');
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursorGlow.style.left = mouseX + 'px';
+  cursorGlow.style.top = mouseY + 'px';
+});
+
+// ─── VIDEO ─────────────────────────────────────
+const heroVideo = document.getElementById('heroVideo');
+const playOverlay = document.getElementById('videoPlayOverlay');
+const placeholder = document.getElementById('videoPlaceholder');
+if (heroVideo.querySelector('source').src && heroVideo.querySelector('source').src !== location.href) {
+  placeholder.style.display = 'none';
+  playOverlay.style.display = 'flex';
+  playOverlay.addEventListener('click', () => {
+    if (heroVideo.paused) { heroVideo.play(); playOverlay.style.opacity = '0'; playOverlay.style.pointerEvents = 'none'; }
+    else { heroVideo.pause(); playOverlay.style.opacity = '1'; playOverlay.style.pointerEvents = 'auto'; }
+  });
+}
+
+// ─── FORM SUBMIT ───────────────────────────────
+document.getElementById('submitBtn').addEventListener('click', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  if (!name || !email) {
+    const t = translations[currentLang];
+    alert(currentLang === 'pt' ? 'Por favor, preencha nome e e-mail.' : currentLang === 'en' ? 'Please fill in your name and email.' : 'Veuillez remplir votre nom et e-mail.');
+    return;
+  }
+  const toast = document.getElementById('toast');
+  const t = translations[currentLang];
+  toast.textContent = t['toast_sent'] || 'Enviado! ✦';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+  document.getElementById('fname').value = '';
+  document.getElementById('femail').value = '';
+  document.getElementById('fmessage').value = '';
+  document.getElementById('fservice').selectedIndex = 0;
+});
+
+// ─── REDUCED MOTION ────────────────────────────
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    el.classList.add('visible');
+  });
+}
+</script>
+</body>
+</html>
