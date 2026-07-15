@@ -1,0 +1,181 @@
+---
+import { faq } from '../data/site';
+---
+
+<section id="faq" class="section faqsection">
+  <div class="container faqsection__grid">
+    <div class="faqsection__head" data-reveal>
+      <span class="eyebrow">Dúvidas frequentes</span>
+      <h2>Tudo o que você precisa <span class="gold-text">saber antes</span></h2>
+    </div>
+
+    <div class="faqsection__list" data-reveal data-reveal-delay="0.08">
+      <div class="faq" data-faq>
+        {
+          faq.map((item, i) => (
+            <div class={`faq__item${i === 0 ? ' is-open' : ''}`} data-faq-item>
+              <button
+                type="button"
+                class="faq__q"
+                data-faq-trigger
+                aria-expanded={i === 0 ? 'true' : 'false'}
+              >
+                <span>{item.q}</span>
+                <span class="faq__icon" aria-hidden="true">
+                  <i />
+                  <i />
+                </span>
+              </button>
+              <div class="faq__body">
+                <div class="faq__inner">
+                  <p>{item.a}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faqsection__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .faqsection__head h2 {
+    font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+    margin-top: 1.2rem;
+  }
+  .faqsection__head p {
+    color: var(--muted);
+    margin-top: 1.2rem;
+    max-width: 42ch;
+  }
+
+  @media (min-width: 940px) {
+    .faqsection__grid {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 4rem;
+    }
+    .faqsection__head {
+      position: sticky;
+      top: 110px;
+    }
+  }
+
+  /* ---------------- Accordion (CSS puro, à prova de falhas) ---------------- */
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .faq__item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.014);
+    transition: border-color 0.4s var(--ease);
+    overflow: hidden;
+  }
+  .faq__item.is-open {
+    border-color: var(--line-strong);
+  }
+
+  .faq__q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    padding: 1.35rem 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.28rem;
+    color: var(--white);
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .faq__icon {
+    flex: none;
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  .faq__icon i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 2px;
+    background: var(--gold-3);
+    translate: -50% -50%;
+    transition: transform 0.4s var(--ease);
+  }
+  .faq__icon i:nth-child(2) {
+    transform: rotate(90deg);
+  }
+  .faq__item.is-open .faq__icon i:nth-child(2) {
+    transform: rotate(0deg);
+  }
+
+  /* A mágica do abrir/fechar: grid-template-rows de 0fr -> 1fr.
+     Suportado em todos os navegadores modernos e não depende de JS de altura. */
+  .faq__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.45s var(--ease), opacity 0.4s var(--ease);
+  }
+  .faq__item.is-open .faq__body {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .faq__inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .faq__inner p {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--muted);
+    font-size: 0.98rem;
+    max-width: 62ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__body {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Accordion em JS nativo — roda sempre (não depende de hidratação de ilha).
+  const root = document.querySelector<HTMLElement>('[data-faq]');
+  if (root) {
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-faq-item]'));
+
+    items.forEach((item) => {
+      const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]');
+      trigger?.addEventListener('click', () => {
+        const willOpen = !item.classList.contains('is-open');
+
+        // comportamento accordion: fecha os outros
+        items.forEach((other) => {
+          if (other !== item) {
+            other.classList.remove('is-open');
+            other
+              .querySelector('[data-faq-trigger]')
+              ?.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        item.classList.toggle('is-open', willOpen);
+        trigger.setAttribute('aria-expanded', String(willOpen));
+      });
+    });
+  }
+</script>

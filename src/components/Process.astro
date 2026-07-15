@@ -1,0 +1,66 @@
+---
+import { processSteps } from '../data/site';
+---
+
+<section id="processo" class="section process">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Como trabalhamos</span>
+      <h2>Um processo <span class="gold-text">simples e transparente</span></h2>
+      <p>Acompanhamento próximo em cada etapa.</p>
+    </div>
+
+    <ol class="process__list">
+      {
+        processSteps.map((p, i) => (
+          <li class="process__item" data-reveal data-reveal-delay={i * 0.06}>
+            <span class="process__step font-display">{p.step}</span>
+            <div class="process__body">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+            <span class="process__line" aria-hidden="true" />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.4rem;
+    counter-reset: step;
+  }
+  .process__item {
+    position: relative;
+    padding: 2rem 1.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.006));
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
+  }
+  .process__item:hover {
+    transform: translateY(-6px);
+    border-color: var(--line-strong);
+  }
+  .process__step {
+    font-size: 3.2rem;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold-3);
+    opacity: 0.85;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .process__body h3 {
+    font-size: 1.45rem;
+    margin-bottom: 0.5rem;
+  }
+  .process__body p {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+</style>

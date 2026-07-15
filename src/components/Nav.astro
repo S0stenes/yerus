@@ -1,0 +1,218 @@
+---
+import { navLinks, whatsappLink } from '../data/site';
+---
+
+<div class="progress" aria-hidden="true"><span data-scroll-progress></span></div>
+
+<header class="nav" data-nav>
+  <div class="container nav__inner">
+    <a href="#top" class="nav__brand" aria-label="Yerus — início">
+      <img src="/logo-golden.svg" alt="Yerus" width="118" height="41" />
+    </a>
+
+    <nav class="nav__links" aria-label="Navegação principal">
+      {navLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="nav__cta">
+      <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-primary btn--sm">
+        Fale conosco
+      </a>
+    </div>
+
+    <button class="nav__burger" data-burger aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div class="nav__mobile" data-mobile-menu hidden>
+    <nav aria-label="Navegação mobile">
+      {navLinks.map((l) => <a href={l.href} data-mobile-link>{l.label}</a>)}
+      <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-primary">Fale conosco</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 60;
+    background: transparent;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: var(--gold-gradient);
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    transition: background 0.5s var(--ease), backdrop-filter 0.5s var(--ease),
+      border-color 0.5s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .nav[data-scrolled] {
+    background: rgba(5, 5, 5, 0.72);
+    backdrop-filter: blur(14px);
+    border-bottom-color: var(--line);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 78px;
+  }
+
+  .nav__brand img {
+    height: 34px;
+    width: auto;
+  }
+
+  .nav__links {
+    display: none;
+    gap: 2.1rem;
+    margin-inline: auto;
+  }
+  .nav__links a {
+    font-size: 0.92rem;
+    color: var(--muted);
+    position: relative;
+    padding-block: 0.4rem;
+    transition: color 0.35s var(--ease);
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold-gradient);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease);
+  }
+  .nav__links a:hover {
+    color: var(--white);
+  }
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .btn--sm {
+    --pad-y: 0.62rem;
+    --pad-x: 1.3rem;
+    font-size: 0.85rem;
+  }
+
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+  }
+  .nav__burger span {
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.4s var(--ease), opacity 0.3s var(--ease);
+  }
+  .nav__burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(4px) rotate(45deg);
+  }
+  .nav__burger[aria-expanded='true'] span:nth-child(2) {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .nav__mobile {
+    background: rgba(5, 5, 5, 0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .nav__mobile nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.4rem var(--gutter) 2rem;
+  }
+  .nav__mobile a:not(.btn) {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    padding-block: 0.55rem;
+    color: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__mobile .btn {
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .nav__links {
+      display: flex;
+    }
+    .nav__cta {
+      display: block;
+    }
+    .nav__burger {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  // sombra/blur ao rolar
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 24) nav.setAttribute('data-scrolled', '');
+    else nav.removeAttribute('data-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // menu mobile
+  const setOpen = (open: boolean) => {
+    if (!burger || !menu) return;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    if (open) {
+      menu.hidden = false;
+    } else {
+      menu.hidden = true;
+    }
+  };
+
+  burger?.addEventListener('click', () => {
+    setOpen(burger.getAttribute('aria-expanded') !== 'true');
+  });
+
+  document.querySelectorAll('[data-mobile-link]').forEach((a) =>
+    a.addEventListener('click', () => setOpen(false)),
+  );
+</script>

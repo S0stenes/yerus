@@ -1,0 +1,306 @@
+/* ============================================================
+   YERUS — DESIGN SYSTEM
+   Preto profundo + dourado em gradiente, tipografia serifada.
+   ============================================================ */
+
+:root {
+  /* ---- Cores ---- */
+  --black: #050505;
+  --black-soft: #0b0b0d;
+  --black-card: #101012;
+  --surface: #141416;
+  --line: rgba(201, 161, 90, 0.14);
+  --line-strong: rgba(201, 161, 90, 0.35);
+
+  --white: #f6f3ee;
+  --muted: #a7a099;
+  --muted-2: #6f6a64;
+
+  /* Dourado da marca (gradiente do logo) */
+  --gold-1: #ffe999;
+  --gold-2: #e8d186;
+  --gold-3: #c9a15a;
+  --gold-4: #ae9458;
+  --gold-5: #573812;
+  --gold: #d9b871;
+  --gold-gradient: linear-gradient(135deg, #ffe999 0%, #e8d186 22%, #c9a15a 58%, #8a6a2f 100%);
+  --gold-gradient-soft: linear-gradient(135deg, #ffe999 0%, #c9a15a 100%);
+
+  /* ---- Tipografia ---- */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---- Layout ---- */
+  --max: 1240px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --radius: 18px;
+  --radius-lg: 26px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.7s;
+}
+
+/* ------------------------- Reset ------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--black);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-3);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--gold-3);
+  color: #000;
+}
+
+/* --------------------- Tipografia base ------------------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--gold-gradient);
+}
+
+.gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ----------------------- Utilidades ---------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(5rem, 11vw, 9rem);
+}
+
+.section-head {
+  max-width: 720px;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section-head h2 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  margin-top: 1.2rem;
+}
+
+.section-head p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-top: 1.2rem;
+  max-width: 56ch;
+}
+
+/* ---- Botões ---- */
+.btn {
+  --pad-y: 0.95rem;
+  --pad-x: 1.9rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: var(--pad-y) var(--pad-x);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 100px;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), color 0.4s var(--ease);
+  will-change: transform;
+}
+
+.btn-primary {
+  color: #17130a;
+  background: var(--gold-gradient);
+  box-shadow: 0 10px 30px -12px rgba(201, 161, 90, 0.6);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 16px 44px -12px rgba(201, 161, 90, 0.75);
+}
+
+.btn-ghost {
+  color: var(--white);
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold-3);
+  color: var(--gold-1);
+}
+
+/* ---- Cartões genéricos ---- */
+.card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.5s var(--ease), transform 0.5s var(--ease);
+}
+
+/* ---- Brilho dourado que segue o cursor (site inteiro) ---- */
+.card,
+.about__card,
+.process__item {
+  position: relative;
+  overflow: hidden;
+}
+.card::after,
+.about__card::after,
+.process__item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  background: radial-gradient(
+    420px 220px at var(--mx, 50%) var(--my, 50%),
+    rgba(201, 161, 90, 0.14),
+    transparent 70%
+  );
+}
+.card:hover::after,
+.about__card:hover::after,
+.process__item:hover::after {
+  opacity: 1;
+}
+
+/* ---- Reveal on scroll (fallback amigável sem JS) ---- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Se o JS não rodar, garante que o conteúdo apareça */
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Divisor dourado fininho ---- */
+.rule {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+}
+
+/* ---- Grão / textura sutil ---- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Acessibilidade: reduz movimento ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

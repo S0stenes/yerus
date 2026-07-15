@@ -1,0 +1,78 @@
+---
+import { whatsappLink, site } from '../data/site';
+import MagneticButton from './MagneticButton.tsx';
+---
+
+<section class="section cta" data-parallax-scene>
+  <div class="cta__bg" aria-hidden="true" data-parallax="0.15"></div>
+
+  <div class="container cta__inner">
+    <img
+      class="cta__mark"
+      src="/icon-golden.svg"
+      alt=""
+      aria-hidden="true"
+      data-float
+    />
+    <span class="eyebrow" data-reveal>Agora, vamos colocar em prática</span>
+    <h2 class="cta__title" data-reveal data-reveal-delay="0.05">
+      Pronto para dar <span class="gold-text">visibilidade</span> à sua marca?
+    </h2>
+
+    <div class="cta__actions" data-reveal data-reveal-delay="0.15">
+      <MagneticButton href={whatsappLink} label="WhatsApp" client:visible />
+    </div>
+
+    <p class="cta__sign font-display" data-reveal data-reveal-delay="0.2">
+      {site.tagline}
+    </p>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta__bg {
+    position: absolute;
+    inset: -20% 0 auto;
+    height: 140%;
+    background: radial-gradient(60% 50% at 50% 30%, rgba(201, 161, 90, 0.16), transparent 70%);
+    pointer-events: none;
+  }
+  .cta__inner {
+    position: relative;
+    max-width: 760px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .cta__mark {
+    width: 64px;
+    opacity: 0.85;
+    margin-bottom: 1.6rem;
+  }
+  .cta__title {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.02;
+    margin-top: 1.2rem;
+  }
+  .cta__text {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-top: 1.4rem;
+    max-width: 48ch;
+  }
+  .cta__actions {
+    margin-top: 2.4rem;
+  }
+  .cta__sign {
+    margin-top: 2.8rem;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--gold-2);
+  }
+</style>

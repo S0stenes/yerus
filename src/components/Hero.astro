@@ -1,0 +1,249 @@
+---
+import { whatsappLink } from '../data/site';
+---
+
+<section id="top" class="hero" data-mouse-scene data-parallax-scene>
+  <!-- Fundo animado (fallback caso o vídeo não exista ainda) -->
+  <div class="hero__aurora" aria-hidden="true">
+    <span class="orb orb--1"></span>
+    <span class="orb orb--2"></span>
+    <span class="orb orb--3"></span>
+  </div>
+
+  <!-- Vídeo de fundo em tela cheia.
+       Coloque seus arquivos em /public/hero/ (hero.webm e hero.mp4).
+       Enquanto não houver vídeo, o fundo animado acima aparece. -->
+  <video
+    class="hero__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/hero/poster.svg"
+    data-hero-video
+  >
+    <source src="/hero/hero.webm" type="video/webm" />
+    <source src="/hero/hero.mp4" type="video/mp4" />
+  </video>
+
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <!-- Marca d'água (águia): o wrapper reage ao mouse, a imagem flutua.
+       Separados para as duas animações não brigarem pelo mesmo transform. -->
+  <div class="hero__watermark" aria-hidden="true" data-mouse="0.05">
+    <img src="/icon-golden.svg" alt="" data-float />
+  </div>
+
+  <div class="container hero__content">
+    <p class="eyebrow" data-reveal>Agência de Marketing Digital</p>
+
+    <h1 class="hero__title" data-reveal data-reveal-delay="0.05">
+      Transformamos ideias em <span class="gold-text">conteúdo</span> e conteúdo em <br>
+      <span class="gold-text">visibilidade</span>.
+    </h1>
+
+    <p class="hero__sub" data-reveal data-reveal-delay="0.12">
+      Posicionamento de marca com presença, autoridade e principalmente <b>autenticidade</b>.<br><br>
+      <b>Audiovisual, tráfego pago e desenvolvimento web</b> sob medida.
+    </p>
+
+    <div class="hero__actions" data-reveal data-reveal-delay="0.18">
+      <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-primary" data-magnetic>
+        Quero crescer minha marca
+      </a>
+      <a href="#servicos" class="btn btn-ghost">Ver serviços</a>
+    </div>
+
+    <!-- Pequenos "layers" flutuantes que reagem ao mouse -->
+    <span class="spark spark--a" aria-hidden="true" data-mouse="0.12"></span>
+    <span class="spark spark--b" aria-hidden="true" data-mouse="0.08"></span>
+  </div>
+
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    /* sem overflow:hidden aqui — senão o reveal (que empurra o conteúdo)
+       corta os botões perto da borda inferior. As órbitas de fundo já são
+       recortadas dentro de .hero__aurora. */
+    isolation: isolate;
+  }
+
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease);
+  }
+  .hero__video[data-ready] {
+    opacity: 0.55;
+  }
+
+  /* --------- Fundo animado (aurora dourada) --------- */
+  .hero__aurora {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background: radial-gradient(120% 120% at 50% 0%, #14100a 0%, #050505 55%);
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.5;
+  }
+  .orb--1 {
+    width: 46vw;
+    height: 46vw;
+    top: -12vw;
+    left: -8vw;
+    background: radial-gradient(circle, rgba(201, 161, 90, 0.55), transparent 65%);
+    animation: drift1 16s ease-in-out infinite;
+  }
+  .orb--2 {
+    width: 38vw;
+    height: 38vw;
+    bottom: -14vw;
+    right: -6vw;
+    background: radial-gradient(circle, rgba(255, 233, 153, 0.35), transparent 65%);
+    animation: drift2 20s ease-in-out infinite;
+  }
+  .orb--3 {
+    width: 26vw;
+    height: 26vw;
+    top: 40%;
+    left: 55%;
+    background: radial-gradient(circle, rgba(138, 106, 47, 0.5), transparent 65%);
+    animation: drift1 24s ease-in-out infinite reverse;
+  }
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(6vw, 4vw) scale(1.12); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-5vw, -3vw) scale(1.08); }
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(5, 5, 5, 0.55) 0%, rgba(5, 5, 5, 0.35) 40%, rgba(5, 5, 5, 1) 100%);
+  }
+
+  .hero__watermark {
+    position: absolute;
+    right: -4vw;
+    top: 50%;
+    translate: 0 -50%;
+    width: min(42vw, 460px);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero__watermark img {
+    width: 100%;
+    opacity: 0.08;
+  }
+
+  .hero__content {
+    position: relative;
+    padding-top: 6rem;
+    max-width: 900px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.9rem, 8.5vw, 6.4rem);
+    line-height: 0.98;
+    margin-top: 1.6rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__sub {
+    margin-top: 1.8rem;
+    max-width: 60ch;
+    font-size: clamp(1rem, 2.2vw, 1.22rem);
+    color: var(--muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.6rem;
+  }
+
+  .spark {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-1);
+    box-shadow: 0 0 18px 4px rgba(255, 233, 153, 0.7);
+  }
+  .spark--a { top: 8%; right: 12%; }
+  .spark--b { bottom: 4%; left: 4%; width: 5px; height: 5px; }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    translate: -50% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .hero__scroll-line {
+    width: 1px;
+    height: 46px;
+    background: linear-gradient(var(--gold-3), transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--gold-1);
+    animation: scrollcue 1.8s var(--ease) infinite;
+  }
+  @keyframes scrollcue {
+    0% { top: -50%; }
+    100% { top: 100%; }
+  }
+
+  @media (max-width: 640px) {
+    .hero__scroll { display: none; }
+    .hero__watermark img { opacity: 0.06; }
+  }
+</style>
+
+<script>
+  // Revela o vídeo suavemente quando ele consegue tocar; se falhar, mantém a aurora.
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (video) {
+    const ready = () => video.setAttribute('data-ready', '');
+    if (video.readyState >= 3) ready();
+    video.addEventListener('canplay', ready, { once: true });
+    // Alguns navegadores bloqueiam autoplay; tentamos tocar explicitamente.
+    video.play?.().catch(() => {});
+  }
+</script>

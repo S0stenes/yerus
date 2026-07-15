@@ -1,0 +1,20 @@
+VÍDEO DE FUNDO DA HERO
+======================
+
+Coloque aqui os arquivos do seu vídeo de fundo:
+
+  - hero.webm   (recomendado — menor e mais eficiente)
+  - hero.mp4    (fallback para Safari/compatibilidade)
+
+Recomendações:
+  - Resolução: 1920x1080 (ou 1280x720 para arquivo mais leve)
+  - Duração: 8–20s em loop, sem áudio (o vídeo já entra mudo)
+  - Tamanho ideal: abaixo de 5 MB para carregar rápido
+  - Deixe imagens "calmas" no centro — o texto fica por cima
+
+Enquanto não houver vídeo, um fundo animado dourado (aurora) aparece
+automaticamente no lugar. Não precisa mexer em código.
+
+O arquivo poster.svg é a imagem exibida enquanto o vídeo carrega.
+Você pode trocar por um poster.jpg do seu vídeo se preferir
+(nesse caso, atualize o atributo poster em src/components/Hero.astro).

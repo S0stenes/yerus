@@ -1,0 +1,319 @@
+---
+import { services } from '../data/site';
+---
+
+<section id="servicos" class="section services">
+  <div class="container">
+    <div class="services__head" data-reveal>
+      <div class="section-head services__head-text">
+        <span class="eyebrow">O que fazemos</span>
+        <h2>Soluções integradas para <span class="gold-text">posicionar sua marca</span></h2>
+        <p>
+          Do conteúdo à conversão. Arraste para o lado e conheça cada serviço.
+        </p>
+      </div>
+
+      <div class="services__controls">
+        <button class="services__arrow" data-prev aria-label="Serviço anterior" disabled>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="services__arrow" data-next aria-label="Próximo serviço">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrossel -->
+  <div class="services__viewport" data-carousel>
+    <div class="services__track" data-track>
+      {
+        services.map((s) => (
+          <article class="card service" data-slide>
+            <div class="service__top">
+              <span class="service__index font-display">{s.index}</span>
+              <span class="service__short">{s.short}</span>
+            </div>
+            <h3 class="service__title">{s.title}</h3>
+            <p class="service__desc">{s.description}</p>
+            <ul class="service__features">
+              {s.features.map((f) => (
+                <li>
+                  <span class="tick" aria-hidden="true" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="services__progress" aria-hidden="true">
+      <span data-progress></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .services__head-text {
+    margin-bottom: 0;
+  }
+
+  .services__controls {
+    display: none;
+    gap: 0.7rem;
+    flex: none;
+    padding-bottom: 0.4rem;
+  }
+  .services__arrow {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    color: var(--white);
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    transition: color 0.35s var(--ease), border-color 0.35s var(--ease),
+      background 0.35s var(--ease), opacity 0.35s var(--ease);
+  }
+  .services__arrow:hover:not(:disabled) {
+    color: #17130a;
+    background: var(--gold-gradient);
+    border-color: transparent;
+  }
+  .services__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  /* ---------- Viewport / Track ---------- */
+  .services__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+  }
+  .services__viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .services__viewport.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  .services__viewport.is-dragging .service {
+    pointer-events: none;
+  }
+
+  .services__track {
+    display: flex;
+    gap: 1.2rem;
+    padding-inline: var(--gutter);
+    padding-block: 0.6rem;
+    width: max-content;
+  }
+
+  /* ---------- Card ---------- */
+  .service {
+    flex: 0 0 clamp(280px, 82vw, 360px);
+    scroll-snap-align: start;
+    padding: 2.4rem 2rem 2.6rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .service:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-6px);
+  }
+  .service__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .service__index {
+    font-size: 2.6rem;
+    line-height: 1;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .service__short {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    text-align: right;
+    max-width: 46%;
+  }
+
+  .service__title {
+    font-size: 1.7rem;
+    margin-bottom: 0.8rem;
+  }
+  .service__desc {
+    color: var(--muted);
+    font-size: 0.98rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .service__features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: auto;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+  .service__features li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+  .tick {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    position: relative;
+  }
+  .tick::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    width: 4px;
+    height: 7px;
+    border: solid #17130a;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* ---------- Barra de progresso ---------- */
+  .services__progress {
+    margin-top: 2rem;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .services__progress span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    min-width: 12%;
+    border-radius: 3px;
+    background: var(--gold-gradient);
+    transition: width 0.15s linear;
+  }
+
+  @media (min-width: 760px) {
+    .services__controls {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const viewport = document.querySelector<HTMLElement>('[data-carousel]');
+  const track = document.querySelector<HTMLElement>('[data-track]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-next]');
+  const progress = document.querySelector<HTMLElement>('[data-progress]');
+
+  if (viewport && track) {
+    // largura de um "passo" (card + gap)
+    const stepSize = () => {
+      const card = track.querySelector<HTMLElement>('[data-slide]');
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      return card ? card.offsetWidth + gap : viewport.clientWidth * 0.8;
+    };
+
+    const maxScroll = () => viewport.scrollWidth - viewport.clientWidth;
+
+    const update = () => {
+      const max = maxScroll();
+      const x = viewport.scrollLeft;
+      if (progress) {
+        const pct = max > 0 ? (x / max) * 100 : 0;
+        progress.style.width = `${pct}%`;
+      }
+      if (prev) prev.disabled = x <= 2;
+      if (next) next.disabled = x >= max - 2;
+    };
+
+    viewport.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    prev?.addEventListener('click', () =>
+      viewport.scrollBy({ left: -stepSize(), behavior: 'smooth' }),
+    );
+    next?.addEventListener('click', () =>
+      viewport.scrollBy({ left: stepSize(), behavior: 'smooth' }),
+    );
+
+    // ---- Arrastar com o mouse (desktop) ----
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return; // touch usa scroll nativo
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = viewport.scrollLeft;
+      viewport.classList.add('is-dragging');
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      viewport.scrollLeft = startScroll - dx;
+    });
+
+    const endDrag = () => {
+      if (!isDown) return;
+      isDown = false;
+      viewport.classList.remove('is-dragging');
+    };
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+
+    // evita clique-fantasma logo após arrastar
+    viewport.addEventListener(
+      'click',
+      (e) => {
+        if (moved) {
+          e.preventDefault();
+          e.stopPropagation();
+          moved = false;
+        }
+      },
+      true,
+    );
+  }
+</script>

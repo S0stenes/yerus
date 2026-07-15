@@ -1,0 +1,93 @@
+---
+import { portfolio } from '../data/site';
+---
+
+<section id="portfolio" class="section portfolio">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Nosso trabalho</span>
+      <h2>Marcas que já <span class="gold-text">crescem com a gente</span></h2>
+      <p>
+        Uma amostra dos projetos.
+      </p>
+    </div>
+
+    <div class="portfolio__grid">
+      {
+        portfolio.map((p, i) => (
+          <article class="card portfolio__item" data-reveal data-reveal-delay={(i % 2) * 0.08}>
+            <div class="portfolio__media" aria-hidden="true">
+              <span class="portfolio__tag">{p.tag}</span>
+              <img src="/icon-golden.svg" alt="" class="portfolio__mark" data-float />
+            </div>
+            <div class="portfolio__info">
+              <h3>{p.title}</h3>
+              <span class="portfolio__cat">{p.category}</span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .portfolio__item {
+    overflow: hidden;
+  }
+  .portfolio__item:hover {
+    border-color: var(--line-strong);
+  }
+  .portfolio__media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(120% 120% at 30% 0%, rgba(201, 161, 90, 0.16), transparent 60%),
+      linear-gradient(180deg, #121013, #08070a);
+    overflow: hidden;
+  }
+  .portfolio__mark {
+    width: 34%;
+    opacity: 0.5;
+    transition: transform 0.6s var(--ease), opacity 0.6s var(--ease);
+  }
+  .portfolio__item:hover .portfolio__mark {
+    transform: scale(1.08);
+    opacity: 0.75;
+  }
+  .portfolio__tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-1);
+    border: 1px solid var(--line-strong);
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    background: rgba(5, 5, 5, 0.4);
+  }
+  .portfolio__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 1.4rem 1.4rem;
+  }
+  .portfolio__info h3 {
+    font-size: 1.4rem;
+  }
+  .portfolio__cat {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+  }
+</style>
