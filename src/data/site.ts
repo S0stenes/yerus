@@ -195,6 +195,6 @@ export const navLinks = [
   { label: 'Serviços', href: '#servicos' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'Processo', href: '#processo' },
-  { label: 'Portfólio', href: '#portfolio' },
+  // { label: 'Portfólio', href: '#portfolio' },
   { label: 'FAQ', href: '#faq' },
 ];
